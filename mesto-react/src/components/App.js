@@ -1,19 +1,14 @@
 import React from 'react';
-// import logo from '../../images/';
-// import '../../';
+import logo from '../images/vector/logo.svg';
+import logoFooter from '../images/vector/mesto_Russia.svg';
 
 function App() {
   return (
     <div>
-
-      {/* Body */}
-
-      <body class="page">
-
         {/* //Header */}
 
         <header className="header">
-          <img src="{logo}" alt="Лого (Место - Россия)" className="header__logo" />
+          <img src={logo} alt="Лого (Место - Россия)" className="header__logo" />
         </header>
 
         {/* //Main */}
@@ -41,7 +36,7 @@ function App() {
         {/* Footer */}
 
         <footer className="footer">
-          <img src="./images/vector/mesto_Russia.svg" alt="2020_Место_Россия" />
+          <img src={logoFooter} alt="2020_Место_Россия" />
         </footer>
 
         {/* Popup Edit profile */}
@@ -135,9 +130,6 @@ function App() {
             <button type="submit" className="popup__submit-button">Да</button>
           </div>
         </div>
-
-      </body>
-
 
     </div>
   );
