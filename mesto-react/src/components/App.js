@@ -4,7 +4,7 @@ import Main from '../components/Main/Main';
 import Footer from '../components/Footer/Footer';
 
 
-function App() {
+function App(props) {
   return (
     <div>
 
@@ -13,18 +13,7 @@ function App() {
         <Main />
         <Footer />
       </div>
-      {/* //Header */}
-
-
-
-      {/* //Main */}
-
-      
-
-      {/* Footer */}
-
-      
-
+  
       {/* Popup Edit profile */}
 
       <div className="popup popup_edit-profile">
