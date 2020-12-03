@@ -6,67 +6,98 @@ import PopupWithForm from '../components/PopupWithForm/PopupWithForm';
 // import ImagePopup from '../components/ImagePopup/ImagePopup'
 
 function App() {
+
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+
+  function handleEditAvatarClick() {
+    setIsEditAvatarPopupOpen(true);
+  };
+
+  function handleEditProfileClick() {
+    setIsEditProfilePopupOpen(true);
+  };
+
+  function handleAddPlaceClick() {
+    setIsAddPlacePopupOpen(true);
+  };
+
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    // setSelectedCard(false)
+  }
+
   return (
-    <div>
 
-      <div className="App">
-        <Header />
-        <Main />
-        <Footer />
-        {/* <ImagePopup /> */}
+    <div className="App">
+      <Header />
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+      />
+      <Footer />
 
-        <PopupWithForm
-          name='edit-profile'
-          title='Редактировать профиль'
-          button='Сохранить'
-          children={
-            <>
-              <input type="text" className="popup__input popup__input-name" value="" placeholder="Имя" name="name" required
-                minlength="2" maxlength="40" autocomplete="off" />
-              <span className="popup__error" id="name-error"></span>
-              <input type="text" className="popup__input popup__input-job" value="" placeholder="О себе" name="link" required
-                minlength="2" maxlength="200" autocomplete="off" />
-              <span className="popup__error" id="link-error"></span>
-            </>
-          }
-        />
+      <PopupWithForm
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        name='edit-avatar'
+        title='Обновить аватар'
+        button='Сохранить'
+        children={
+          <>
+            <input type="url" className="popup__input popup__input-link" value="" placeholder="Ссылка на новый аватар"
+              name="link" required autocomplete="off" />
+            <span className="popup__error" id="link-error"></span>
+          </>
+        }
+      />
 
-        <PopupWithForm
-          name='add-element'
-          title='Новое место'
-          button='Создать'
-          children={
-            <>
-              <input type="text" className="popup__input popup__input-place" value="" placeholder="Название" name="name" required
-                minlength="1" maxlength="30" autocomplete="off" />
-              <span className="popup__error" id="name-error"></span>
-              <input type="url" className="popup__input popup__input-link" value="" placeholder="Ссылка на картинку" name="link"
-                required autocomplete="off" />
-              <span className="popup__error" id="link-error"></span>
-            </>
-          }
-        />
+      <PopupWithForm
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        name='edit-profile'
+        title='Редактировать профиль'
+        button='Сохранить'
+        children={
+          <>
+            <input type="text" className="popup__input popup__input-name" value="" placeholder="Имя" name="name" required
+              minlength="2" maxlength="40" autocomplete="off" />
+            <span className="popup__error" id="name-error"></span>
+            <input type="text" className="popup__input popup__input-job" value="" placeholder="О себе" name="link" required
+              minlength="2" maxlength="200" autocomplete="off" />
+            <span className="popup__error" id="link-error"></span>
+          </>
+        }
+      />
 
-        <PopupWithForm
-          name='edit-avatar'
-          title='Обновить аватар'
-          button='Сохранить'
-          children={
-            <>
-              <input type="url" className="popup__input popup__input-link" value="" placeholder="Ссылка на новый аватар"
-                name="link" required autocomplete="off" />
-              <span className="popup__error" id="link-error"></span>
-            </>
-          }
-        />
+      <PopupWithForm
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        name='add-element'
+        title='Новое место'
+        button='Создать'
+        children={
+          <>
+            <input type="text" className="popup__input popup__input-place" value="" placeholder="Название" name="name" required
+              minlength="1" maxlength="30" autocomplete="off" />
+            <span className="popup__error" id="name-error"></span>
+            <input type="url" className="popup__input popup__input-link" value="" placeholder="Ссылка на картинку" name="link"
+              required autocomplete="off" />
+            <span className="popup__error" id="link-error"></span>
+          </>
+        }
+      />
 
-        <PopupWithForm
-          name='remove-card'
-          title='Вы уверены?'
-          button='Да'
-        />
-
-      </div>
+      <PopupWithForm
+        onClose={closeAllPopups}
+        name='remove-card'
+        title='Вы уверены?'
+        button='Да'
+      />
 
       {/* Element Tamplate */}
 
