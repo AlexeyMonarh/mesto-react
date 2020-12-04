@@ -53,13 +53,13 @@ function App() {
         name='edit-avatar'
         title='Обновить аватар'
         button='Сохранить'
-        children={
+        children={(
           <>
             <input type="url" className="popup__input popup__input-link" placeholder="Ссылка на новый аватар"
               name="link" />
             <span className="popup__error" id="link-error"></span>
           </>
-        }
+        )}
       />
 
       <PopupWithForm

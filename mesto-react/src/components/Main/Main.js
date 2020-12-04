@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import api from '../utils/api';
+import api from '../../utils/api';
 import Card from '../Card/Card';
 
 
@@ -14,6 +14,8 @@ function Main(props) {
   useEffect(() => {
     api.getInitialCards().then((res) => {
       setCards(res);
+    }).catch((res) => {
+      console.log(`Ошибка: ${res.status}`);
     })
   }, []);
 
@@ -22,6 +24,8 @@ function Main(props) {
       setUserName(res.name);
       setUserDescription(res.about);
       setUserAvatar(res.avatar);
+    }).catch((res) => {
+      console.log(`Ошибка: ${res.status}`);
     })
   }, []);
 
@@ -41,9 +45,9 @@ function Main(props) {
       </section>
       <section>
         <ul className="elements">
-          {cards.map((data, id) => {
+          {cards.map((data, _id) => {
             return (
-              <Card key={id} link={data.link} name={data.name} likes={data.likes} onCardClick={props.onCardClick} />
+              <Card key={_id} link={data.link} name={data.name} likes={data.likes} onCardClick={props.onCardClick} />
             )
           })}
         </ul>
