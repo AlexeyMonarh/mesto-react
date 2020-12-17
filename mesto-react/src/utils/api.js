@@ -9,7 +9,6 @@ class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
-
   }
 
   getInitialCards() {
@@ -39,9 +38,7 @@ class Api {
     return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatar,
-      })
+      body: JSON.stringify(avatar)
     })
   }
 
@@ -66,40 +63,18 @@ class Api {
     }).then(thenApi)
   }
 
-  // plusLike(userId) {
-  //   return fetch(`${this._baseUrl}/cards/likes/${userId}`, {
-  //     method: 'PUT',
-  //     headers: this._headers,
-  //   }).then(thenApi)
-  // }
-
-  // deleteLike(userId) {
-  //   return fetch(`${this._baseUrl}/cards/likes/${userId}`, {
-  //     method: 'DELETE',
-  //     headers: this._headers,
-  //     body: JSON.stringify({
-  //       _id: userId,
-  //     })
-  //   }).then(thenApi)
-  // }
-
   changeLikeCardStatus(cardId, isLiked) {
-
     if (isLiked) {
-      // this.plusLike(cardId);
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: 'PUT',
         headers: this._headers
       }).then(thenApi)
     } else {
-      // this.deleteLike(cardId);
       return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: 'DELETE',
         headers: this._headers
       }).then(thenApi)
     }
-
-
   }
 }
 
