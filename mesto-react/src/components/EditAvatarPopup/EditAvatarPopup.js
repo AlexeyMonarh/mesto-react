@@ -9,6 +9,7 @@ export default function EditAvatarPopup(props) {
     props.onUpdateAvatar({
       avatar: avaRef.current.value,
     });
+    avaRef.current.value = '';
   } 
 
   return (

@@ -9,7 +9,7 @@ import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from '../components/EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup/EditAvatarPopup';
-import AddPlacePopup from '../components/AddPlacePopup/AddPlacePopup'
+import AddPlacePopup from '../components/AddPlacePopup/AddPlacePopup';
 
 
 function App() {
@@ -28,15 +28,14 @@ function App() {
     })
   }, []);
 
-  function handleAddPlaceSubmit(e) {
-    
-    
-    
-    // e.preventDefault();
-    // props.onUpdateAvatar({
-    //   avatar: avaRef.current.value,
-    // });
-  } 
+  function handleAddPlaceSubmit(data) {
+    api.createNewCard(data).then((res) => {
+      setCards([res, ...cards]);
+    }).catch((res) => {
+      console.log(`Ошибка: ${res.status}`);
+    })
+    closeAllPopups();
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -149,7 +148,7 @@ function App() {
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          
+          onCreateCard={handleAddPlaceSubmit}
         />
 
         <PopupWithForm

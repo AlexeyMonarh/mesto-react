@@ -11,11 +11,11 @@ function Card(props) {
   const cardLikeButtonClassName = `elements__element-like ${isLiked ? 'elements__element-like_visible' : 'elements__element-like_hidden'}`;
 
   function handleDeleteClick() {
-    props.onCardDelete(props)
+    props.onCardDelete(props);
   }
   
   function handleLikeClick() {
-    props.onCardLike(props)
+    props.onCardLike(props);
   }
 
   function handleClick() {
