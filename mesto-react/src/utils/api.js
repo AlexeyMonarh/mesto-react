@@ -31,7 +31,7 @@ class Api {
         name: name,
         about: about,
       })
-    })
+    }).then(thenApi)
   }
 
   setAvatar(avatar) {
@@ -39,7 +39,7 @@ class Api {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(avatar)
-    })
+    }).then(thenApi)
   }
 
   createNewCard(element) {

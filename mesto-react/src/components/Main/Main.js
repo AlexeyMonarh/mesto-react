@@ -24,7 +24,7 @@ function Main(props) {
           {props.cards.map((data, _id) => {
             return (
               <Card
-                key={_id}
+                key={data._id}
                 data={data}
                 link={data.link}
                 name={data.name}
@@ -33,6 +33,7 @@ function Main(props) {
                 onCardClick={props.onCardClick}
                 onCardLike={props.onCardLike}
                 onCardDelete={props.onCardDelete}
+                onPopupDelete={props.onPopupDelete}
               />
             )
           })}

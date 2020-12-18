@@ -13,7 +13,7 @@ function Card(props) {
   function handleDeleteClick() {
     props.onCardDelete(props);
   }
-  
+
   function handleLikeClick() {
     props.onCardLike(props);
   }

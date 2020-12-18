@@ -9,7 +9,7 @@ function PopupWithForm(props) {
         <h2 className="popup__heading">{props.title}</h2>
         <form action="#" className="popup__inputs" name={props.name} onSubmit={props.onSubmit}>
           {props.inputs}
-          <button type="submit" className="popup__submit-button">{props.button}</button>
+          <button type="submit" className="popup__submit-button" onClick={props.onCardDelete}>{props.button}</button>
         </form>  
       </div>
     </div>
