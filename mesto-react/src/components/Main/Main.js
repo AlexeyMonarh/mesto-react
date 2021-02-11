@@ -32,7 +32,7 @@ function Main(props) {
                 likes={data.likes}
                 onCardClick={props.onCardClick}
                 onCardLike={props.onCardLike}
-                onCardDelete={props.onCardDelete}
+                setId={props.setId}
                 onPopupDelete={props.onPopupDelete}
               />
             )
