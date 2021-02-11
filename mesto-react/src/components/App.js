@@ -1,16 +1,20 @@
-import React from 'react';
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentIdCardContext } from '../contexts/CurrentIdCardContext';
 import Header from '../components/Header/Header';
 import Main from '../components/Main/Main';
 import Footer from '../components/Footer/Footer';
 import ImagePopup from '../components/ImagePopup/ImagePopup';
-import api from '../utils/api';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CurrentIdCardContext } from '../contexts/CurrentIdCardContext';
 import EditProfilePopup from '../components/EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from '../components/EditAvatarPopup/EditAvatarPopup';
 import AddPlacePopup from '../components/AddPlacePopup/AddPlacePopup';
 import RemoveCardPopup from '../components/RemoveCardPopup/RemoveCardPopup';
+import Login from '../components/Login/Login';
+import Register from '../components/Register/Register';
+import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
+import InfoTooltip from '../components/InfoTooltip/InfoTooltip';
+import api from '../utils/api';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -21,12 +25,25 @@ function App() {
   const [currentUser, setСurrentUser] = useState("");
   const [currentId, setCurrentId] = useState("");
   const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    email: '',
+    password: '',
+  });
 
   const escFunction = (event) => {
     if (event.keyCode === 27) {
       closeAllPopups();
     }
   };
+
+  useEffect(() => {
+
+  }, []);
+
+  // useEffect(()=>{
+
+  // }, [loggedIn]);
 
   useEffect(() => {
     document.addEventListener("keydown", escFunction, false);
@@ -50,6 +67,24 @@ function App() {
       console.log(`Ошибка: ${res.status}`);
     })
   }, []);
+
+  function tokenCheck() {
+    if (localStorage.getItem('jwt')) {
+      let jwt = localStorage.getItem('jwt');
+      InfoTooltip.getConten(jwt).then((res) => {
+        if (res) {
+          let userData = {
+            email: res.email,
+            password: res.password,
+          }
+        }
+      })
+    }
+  }
+
+  function handleLogin() {
+    setLoggedIn(true)
+  }
 
   function handleAddPlaceSubmit(data) {
     api.createNewCard(data).then((res) => {
@@ -138,6 +173,46 @@ function App() {
       <CurrentIdCardContext.Provider value={currentId}>
         <div className="App">
           <Header />
+
+          <Switch>
+            <ProtectedRoute
+              path="/"
+              // component={Login}
+              loggedIn={loggedIn}
+            />
+
+            <ProtectedRoute
+              path="/my-profile"
+              component={InfoTooltip}
+              loggedIn={loggedIn}
+              userData={userData}
+            />
+
+
+            <Route path="/sign-in">
+              {/* <div className="loginContainer"> */}
+              <Login handleLogin={handleLogin} tokenCheck={tokenCheck} />
+              {/* </div> */}
+            </Route>
+
+
+            <Route path="/sign-up">
+              {/* <div className="registerContainer"> */}
+              <Register />
+              {/* </div> */}
+            </Route>
+
+            <Route>
+              {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+            </Route>
+
+            {/* <Route path="/my-profile">
+              <InfoTooltip />
+            </Route> */}
+
+
+          </Switch>
+
           <Main
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
@@ -148,6 +223,8 @@ function App() {
             onPopupDelete={handleDeleteCardClick}
             setId={setId}
           />
+
+
           <Footer />
 
           <EditAvatarPopup
@@ -185,4 +262,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);
