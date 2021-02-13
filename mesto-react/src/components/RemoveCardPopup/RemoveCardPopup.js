@@ -1,12 +1,11 @@
 import React from 'react';
 import PopupWithForm from '../../components/PopupWithForm/PopupWithForm';
-import { CurrentIdCardContext } from '../../contexts/CurrentIdCardContext';
 
 export default function RemoveCardPopup(props) {
-  const currentId = React.useContext(CurrentIdCardContext);
 
   function handleDeleteClick() {
-    props.onCardDelete(currentId);
+    // console.log(props.currentId)
+    props.onCardDelete(props.currentId);
   }
 
   return (

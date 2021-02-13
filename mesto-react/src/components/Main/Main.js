@@ -1,12 +1,15 @@
 import React from 'react';
 import Card from '../Card/Card';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="content">
+      <Header email={props.email} title="Выход" onClick={props.signOut} to=""/>
       <section className="profile">
         <div className="profile__avatar-hover" onClick={props.onEditAvatar} style={{ backgroundImage: `url(${currentUser.avatar})` }}>
         </div>
@@ -32,13 +35,15 @@ function Main(props) {
                 likes={data.likes}
                 onCardClick={props.onCardClick}
                 onCardLike={props.onCardLike}
-                setId={props.setId}
+                // setId={props.setId}
                 onPopupDelete={props.onPopupDelete}
+                handleCardDelete={props.handleCardDelete}
               />
             )
           })}
         </ul>
       </section>
+      <Footer />
     </main>
   );
 }

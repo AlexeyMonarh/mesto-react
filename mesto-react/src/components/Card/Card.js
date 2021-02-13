@@ -10,8 +10,10 @@ function Card(props) {
   const isLiked = props.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = `elements__element-like ${isLiked ? 'elements__element-like_visible' : 'elements__element-like_hidden'}`;
 
-  function setId() {
-    props.setId(props);
+  function setCardId() {
+    // props.setId(props._id);
+    // props.onPopupDelete();
+    props.handleCardDelete(props._id)
   }
 
   function handleLikeClick() {
@@ -23,8 +25,8 @@ function Card(props) {
   }
 
   return (
-    <li className="elements__element" onClick={setId}>
-      <button type="submit" className={cardDeleteButtonClassName} onClick={props.onPopupDelete}></button>
+    <li className="elements__element">
+      <button type="submit" className={cardDeleteButtonClassName} onClick={setCardId}></button>
       <img src={props.link} id="" alt="Места-России" className="elements__element-img" onClick={handleClick} />
       <div className="elements__element-description">
         <h2 className="elements__element-title">{props.name}</h2>
