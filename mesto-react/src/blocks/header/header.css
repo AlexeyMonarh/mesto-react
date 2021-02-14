@@ -1,6 +1,7 @@
  @import url('./__logo/header__logo.css');
  @import url('./__auth/header__auth.css');
  @import url('./__auth/_mobile/header__auth_mobile.css');
+ @import url('./_mobile/header_mobile.css');
 
  .header {
   display: flex;

@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Route, Switch, Redirect, withRouter, useHistory } from "react-router-dom";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import  succed  from '../images/vector/succed.svg';
-import  fail  from '../images/vector/fail.svg';
+import succed from '../images/vector/succed.svg';
+import fail from '../images/vector/fail.svg';
 import Main from '../components/Main/Main';
 import ImagePopup from '../components/ImagePopup/ImagePopup';
 import EditProfilePopup from '../components/EditProfilePopup/EditProfilePopup';
@@ -33,8 +33,13 @@ function App() {
   const [infoTool, setInfoTool] = useState({
     message: '',
     img: ''
-  })
-  const [registerPopup, setRegisterPopup] = useState()
+  });
+  const [registerPopup, setRegisterPopup] = useState();
+
+  const err = (res) => {
+    console.log(`Ошибка: ${res}`);
+  };
+
   const history = useHistory();
 
   const escFunction = (event) => {
@@ -42,7 +47,7 @@ function App() {
       closeAllPopups();
     }
   };
-  
+
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
@@ -59,7 +64,7 @@ function App() {
           history.push("/");
         })
         .catch((res) => {
-          console.log(`Ошибка: ${res.status}`);
+          console.log(`Ошибка: ${res}`);
         })
     }
   }, []);
@@ -80,17 +85,13 @@ function App() {
   useEffect(() => {
     api.getInitialCards().then((res) => {
       setCards(res);
-    }).catch((res) => {
-      console.log(`Ошибка: ${res.status}`);
-    })
+    }).catch(err)
   }, []);
 
   useEffect(() => {
     api.getUser().then((res) => {
       setСurrentUser(res);
-    }).catch((res) => {
-      console.log(`Ошибка: ${res.status}`);
-    })
+    }).catch(err)
   }, []);
 
   function handleRegister(data) {
@@ -107,14 +108,14 @@ function App() {
         throw new Error('Некорректно заполнено одно из полей');
       }
     })
-    .catch((err)=>{
+      .catch((err) => {
         setRegisterPopup(true);
         setInfoTool({
           message: 'Что-то пошло не так! Попробуйте ещё раз.',
           img: fail
         })
         console.log(`Такой email существует ${err}`)
-    })
+      })
   }
 
   function handleLogin(data) {
@@ -129,6 +130,7 @@ function App() {
         localStorage.setItem('jwt', res.token)
       }
     })
+      .catch(err)
   }
 
   function signOut() {
@@ -141,9 +143,7 @@ function App() {
     api.createNewCard(data).then((res) => {
       setCards([res, ...cards]);
       closeAllPopups();
-    }).catch((res) => {
-      console.log(`Ошибка: ${res.status}`);
-    })
+    }).catch(err)
   }
 
   function handleCardLike(card) {
@@ -151,9 +151,7 @@ function App() {
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
       setCards(newCards);
-    }).catch((res) => {
-      console.log(`Ошибка: ${res.status}`);
-    });
+    }).catch(err)
   }
 
   // function setId(card) {
@@ -166,9 +164,7 @@ function App() {
       return setCards(newList);
     })
       .then(closeAllPopups())
-      .catch((res) => {
-        console.log(`Ошибка: ${res.status}`);
-      });
+      .catch(err)
   }
 
   function handleUpdateAvatar(data) {
@@ -176,9 +172,7 @@ function App() {
       .then((res) => {
         setСurrentUser(res);
         closeAllPopups();
-      }).catch((res) => {
-        console.log(`Ошибка: ${res.status}`);
-      });
+      }).catch(err)
   }
 
   function handleUpdateUser(data) {
@@ -186,9 +180,7 @@ function App() {
       .then((res) => {
         setСurrentUser(res);
         closeAllPopups();
-      }).catch((res) => {
-        console.log(`Ошибка: ${res.status}`);
-      });
+      }).catch(err);
   }
 
   function handleDeleteCardClick() {
@@ -223,7 +215,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
-
+        
         <Switch>
           <ProtectedRoute
             exact
@@ -242,12 +234,6 @@ function App() {
             // setId={setId}
             handleCardDelete={handleCardDelete}
           />
-          {/* <ProtectedRoute
-            path="/my-profile"
-            component={InfoTooltip}
-            loggedIn={loggedIn}
-            userData={userData}
-          /> */}
           <Route path="/sign-in">
             <Login
               handleLogin={handleLogin}

@@ -9,7 +9,7 @@ function Main(props) {
 
   return (
     <main className="content">
-      <Header email={props.email} title="Выход" onClick={props.signOut} to=""/>
+      <Header headerMob={'header_mobile'} email={props.email} title="Выход" onClick={props.signOut} to=""/>
       <section className="profile">
         <div className="profile__avatar-hover" onClick={props.onEditAvatar} style={{ backgroundImage: `url(${currentUser.avatar})` }}>
         </div>

@@ -14,11 +14,13 @@ function InfoTooltip(props) {
       img={img}
       message={message}
       div={
-        <div className="infoTool" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-          <img src={img} alt="Succed" />
-          <h2 style={{ textAlign: "center", marginBottom: "0", marginTop: "40px" }}>{message}</h2>
+        <div className="infoTool">
+          <img src={img} alt="Картинка регистрации" />
+          <p className="infoTool__title infoTool__title_mobile">{message}</p>
         </div>
       }
+      selectorCont={'popup__container_mobile'}
+      selectorBtn={'popup__close-icon_mobile'}
     />
   )
 }
